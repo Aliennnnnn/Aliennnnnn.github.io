@@ -177,22 +177,22 @@
     <ul id="menu" class="menu">
       
         
-        <li class="menu-item menu-item-home">
+        <li class="menu-item menu-item-首页">
           <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            首页
           </a>
         </li>
       
         
-        <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-目录">
           <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            目录
           </a>
         </li>
       
@@ -232,7 +232,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/Github-Pages-Hexo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="王亚东">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/27/Github-Pages-Hexo/" itemprop="url">Github Pages + Hexo</a></h1>
+                <a class="post-title-link" href="/2018/06/27/Github-Pages-Hexo/" itemprop="url">初步理解 Promise</a></h1>
         
 
         <div class="post-meta">
@@ -300,7 +300,38 @@
       
         
           
-            <h1 id="静静地等待第一篇文章…"><a href="#静静地等待第一篇文章…" class="headerlink" title="静静地等待第一篇文章…"></a>静静地等待第一篇文章…</h1>
+            <p><img src="https://cdn.scotch.io/1/HOyDrBGjSKixRiNn9q0m_javascript-promises-for-dummies.jpg" alt="promise"></p>
+<p>以前学习ES6的<code>Promise</code>总是似是而非，当时好像懂了，但是实际遇到时总有这样或者那样的疑惑。直到我看到了一篇 Jecelyn Yeen 的分享。</p>
+<h4 id="（一）理解-Promise"><a href="#（一）理解-Promise" class="headerlink" title="（一）理解 Promise"></a>（一）理解 Promise</h4><p>举个简单的例子：<br>想象一下你是一个孩子。你老妈承诺下周给你买个新手机。你<strong>【不知道】</strong>你老妈会不会兑现承诺，你老妈可以信守承诺给你买个新手机，但是如果她不高兴的话，也可以让你滚蛋不买了。</p>
+<p>这就是一个<code>Promise</code>，一个 Promise 有三种状态，分别是：</p>
+<ol>
+<li>待定(<code>pending</code>)，下周之前你不知道会不会得到一个新手机；</li>
+<li>兑现承诺(<code>resolve</code>)，你老妈兑现承诺给你买了一个新手机；</li>
+<li>违背承诺(<code>reject</code>)，你老妈很不开心，让你滚蛋。</li>
+</ol>
+<h4 id="（二）创建一个-Promise"><a href="#（二）创建一个-Promise" class="headerlink" title="（二）创建一个 Promise"></a>（二）创建一个 Promise</h4><p>我们把上面的例子转换成 JS 就是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> isMomHappy = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> willIGetNewPhone = <span class="keyword">new</span> <span class="built_in">Promise</span>(</span><br><span class="line">    (resolve, reject) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (isMomHappy) &#123;</span><br><span class="line">            <span class="keyword">let</span> phone = &#123;</span><br><span class="line">                brand: <span class="string">'Apple'</span>,</span><br><span class="line">                color: <span class="string">'white'</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//老妈很高兴，买了新手机给你，</span></span><br><span class="line">            <span class="comment">//这时你拿到了手机，知道了手机的牌子和颜色</span></span><br><span class="line">            resolve(phone);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> reason = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Mom is not happy.'</span>);</span><br><span class="line">            <span class="comment">//老妈拒绝了你，你从老妈的眼神中读出了原因--“我很不高兴，别来惹我”</span></span><br><span class="line">            reject(reason);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>这段代码是不是很有表现力～</p>
+<ol>
+<li>我们有一个布尔值<code>isMomHappy</code>，来表示你老妈是否开心；</li>
+<li>我们有一个<code>Promise</code>对象<code>willIGetNewPhone</code>。这个 Promise 可以是 <code>resolve</code> （你老妈给了你一个新手机），也可以是 <code>reject</code> （你老妈不开心并拒绝给你新手机）。</li>
+<li>还有一个标准的语法去定义一个新的<code>Promise</code>，参考<a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener">MDN documentation</a>，<br>看下面的代码：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//promise syntax look like this</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="comment">/* executor*/</span> (resolve, reject) =&gt; &#123; ... &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="（三）玩转-Promise"><a href="#（三）玩转-Promise" class="headerlink" title="（三）玩转 Promise"></a>（三）玩转 Promise</h4><p>现在我们有了 Promise，咱们就开始玩一玩</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">// call our promise</span></span><br><span class="line"><span class="keyword">let</span> askMom = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    willIGetNewPhone</span><br><span class="line">        .then(<span class="function">(<span class="params">fulfilled</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// yay, you got a new phone</span></span><br><span class="line">            <span class="built_in">console</span>.log(fulfilled);</span><br><span class="line">            <span class="comment">//output: &#123;brand: 'Apple', color: 'white'&#125;</span></span><br><span class="line">        &#125;, (error) =&gt; &#123;</span><br><span class="line">            <span class="comment">// oops, mom don't buy it</span></span><br><span class="line">            <span class="built_in">console</span>.log(error.message);</span><br><span class="line">            <span class="comment">// output: 'Mom is not happy.'</span></span><br><span class="line">        &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">askMom();</span><br></pre></td></tr></table></figure>
+<ol>
+<li>我们有一个函数<code>askMom()</code>。在这个函数中我们使用了之前定义的 Promise <code>willIGetNewPhone</code>；</li>
+<li>我们的 Promise ，到了兑现诺言的时间时，无论老妈是信守还是违背承诺，我们都会做出相应的反应，<code>.then()</code>（的第一个参数处理信守承诺的结果（从<code>resolve(phone)</code>拿到了新手机），第二个参数处理违背承诺的结果（从<code>reject(reason)</code>拿到了老妈拒绝你的理由）。</li>
+</ol>
+<h4 id="（四）链接-Promise"><a href="#（四）链接-Promise" class="headerlink" title="（四）链接 Promise"></a>（四）链接 Promise</h4><p> Promise<br>都是可以链接的。</p>
+<p>比如说，你承诺给你的朋友说，拿到新手机就给他玩玩，让他过过瘾。</p>
+<p>这又是另外一个 Promise 了，转换成代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">let</span> showOff = <span class="function">(<span class="params">phone</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> message = <span class="string">`Hey friend, i have a new <span class="subst">$&#123;phone.brand&#125;</span> <span class="subst">$&#123;phone.color&#125;</span> phone`</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span> (</span><br><span class="line">        (resolve, reject ) =&gt; &#123;</span><br><span class="line">            resolve(message);</span><br><span class="line">        &#125; </span><br><span class="line">    );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> askMom = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    willIGetNewPhone</span><br><span class="line">        .then(showOff)</span><br><span class="line">        .then(<span class="function">(<span class="params">fulfilled</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// yay, you got a new phone</span></span><br><span class="line">            <span class="built_in">console</span>.log(fulfilled);</span><br><span class="line">            <span class="comment">//output: &#123;brand: 'Apple', color: 'white'&#125;</span></span><br><span class="line">        &#125;, (error) =&gt; &#123;</span><br><span class="line">            <span class="comment">// oops, mom don't buy it</span></span><br><span class="line">            <span class="built_in">console</span>.log(error.message);</span><br><span class="line">            <span class="comment">// output: 'Mom is not happy.'</span></span><br><span class="line">        &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">askMom();</span><br></pre></td></tr></table></figure>
+<h4 id="（五）-Promise-都是异步的"><a href="#（五）-Promise-都是异步的" class="headerlink" title="（五） Promise 都是异步的"></a>（五） Promise 都是异步的</h4><p><strong>为什么？因为生活就是不等人的，JavaScript也是！</strong></p>
+<p>你不会说因为你老妈承诺你一周后给你一个新手机，然后就不去玩了，干等一星期对吧？</p>
+<p>这就是异步调用，代码将无阻塞运行或等待结果。任何需要等 Promise 的行为都应该放在 <code>.then()</code> 里。</p>
+
           
         
       
@@ -351,7 +382,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="王亚东">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -498,7 +529,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-author-name" itemprop="name">王亚东</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -507,7 +538,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives">
               
                   <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
@@ -554,7 +585,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">王亚东</span>
 
   
 </div>
