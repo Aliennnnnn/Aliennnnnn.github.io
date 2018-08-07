@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,Node.js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Pug 原名 不叫 Pug，而是大名鼎鼎的 jade，因为商标的原因改名 Pug，但是语法仍然没变。 （一）为什么要用 Pug在开发官网的项目中，由于需求简单，且有大量可复用代码存在，让人不由自主地想对其进行组件化。然而由于 React 的 SEO 问题，只能选用其他的技术栈，Pug 就成了首选。 Pug 的优点很多，在官网项目里最实用的就是模板继承 Inheritance和包含 Include，">
+<meta name="keywords" content="JavaScript,Node.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pug – 健壮的、优雅的、功能丰富的node.js模板引擎">
+<meta property="og:url" content="http://yoursite.com/2018/08/07/pug/index.html">
+<meta property="og:site_name" content="王亚东的博客">
+<meta property="og:description" content="Pug 原名 不叫 Pug，而是大名鼎鼎的 jade，因为商标的原因改名 Pug，但是语法仍然没变。 （一）为什么要用 Pug在开发官网的项目中，由于需求简单，且有大量可复用代码存在，让人不由自主地想对其进行组件化。然而由于 React 的 SEO 问题，只能选用其他的技术栈，Pug 就成了首选。 Pug 的优点很多，在官网项目里最实用的就是模板继承 Inheritance和包含 Include，">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-07T10:35:05.677Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pug – 健壮的、优雅的、功能丰富的node.js模板引擎">
+<meta name="twitter:description" content="Pug 原名 不叫 Pug，而是大名鼎鼎的 jade，因为商标的原因改名 Pug，但是语法仍然没变。 （一）为什么要用 Pug在开发官网的项目中，由于需求简单，且有大量可复用代码存在，让人不由自主地想对其进行组件化。然而由于 React 的 SEO 问题，只能选用其他的技术栈，Pug 就成了首选。 Pug 的优点很多，在官网项目里最实用的就是模板继承 Inheritance和包含 Include，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/07/pug/"/>
+
+
+
+
+
+  <title>Pug – 健壮的、优雅的、功能丰富的node.js模板引擎 | 王亚东的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王亚东的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-目录">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/07/pug/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王亚东">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王亚东的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pug – 健壮的、优雅的、功能丰富的node.js模板引擎</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-07T17:30:32+08:00">
+                2018-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Pug 原名 不叫 Pug，而是大名鼎鼎的 jade，因为商标的原因改名 Pug，但是语法仍然没变。</p>
+<h4 id="（一）为什么要用-Pug"><a href="#（一）为什么要用-Pug" class="headerlink" title="（一）为什么要用 Pug"></a>（一）为什么要用 Pug</h4><p>在开发官网的项目中，由于需求简单，且有大量可复用代码存在，让人不由自主地想对其进行组件化。然而由于 React 的 SEO 问题，只能选用其他的技术栈，Pug 就成了首选。</p>
+<p>Pug 的优点很多，在官网项目里最实用的就是<strong>模板继承 Inheritance</strong>和<strong>包含 Include</strong>，这两个特性其实已经实现了我们想要的组件化的功能。</p>
+<h4 id="（二）Webpack-配置"><a href="#（二）Webpack-配置" class="headerlink" title="（二）Webpack 配置"></a>（二）Webpack 配置</h4><a id="more"></a>
+<ol>
+<li><p>由于需要输出<code>HTML</code>，所以需要安装<code>html-webpack-plugin</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i -D html-webpack-plugin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后我们需要安装一下<code>pug</code>和<code>pug-html-loader</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i -D pug html-loader pug-html-loader</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接下来就可以进入<code>webpack.config.js</code>配置处理<code>.pug</code>文件的 loader 啦</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">module: &#123;</span><br><span class="line">    rules: [&#123;</span><br><span class="line">        test: /\.pug$/,</span><br><span class="line">        use: [&apos;html-loader&apos;,&apos;pug-html-loader&apos;]</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="（三）基础语法知识"><a href="#（三）基础语法知识" class="headerlink" title="（三）基础语法知识"></a>（三）基础语法知识</h4><p>Pug 的语法很简单，有<code>HTML</code>和<code>JS</code>x基础的话读官方文档半天就能上手，需要注意的是 Pug 用缩进来代表层级关系，这样的好处就是避免嵌套过多时由于闭合问题报错，所以最好把编辑器 Tab 调成 2。</p>
+<h5 id="1-类名和ID名"><a href="#1-类名和ID名" class="headerlink" title="1.类名和ID名"></a>1.类名和ID名</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a.button</span><br><span class="line">a(class=&quot;button&quot;)</span><br></pre></td></tr></table></figure>
+<p>编译后：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"button"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"button"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="2-属性"><a href="#2-属性" class="headerlink" title="2.属性"></a>2.属性</h5><p>属性可以用<code>()</code>包裹起来，属性之间用逗号隔开<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a(href=&quot;google.com&quot;,title=&quot;google&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>编译后<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"google.com"</span> <span class="attr">title</span>=<span class="string">"google"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="3-文本内容"><a href="#3-文本内容" class="headerlink" title="3.文本内容"></a>3.文本内容</h5><p>单行文本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a(href=&quot;google.com&quot;,title=&quot;google&quot;) Hello World</span><br></pre></td></tr></table></figure></p>
+<p>多行文本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">p.</span><br><span class="line">    asdfasdfa</span><br><span class="line">    asdfasd</span><br><span class="line">    adsfasd</span><br><span class="line">    asdfasdfa</span><br></pre></td></tr></table></figure></p>
+<h5 id="4-JavaScript"><a href="#4-JavaScript" class="headerlink" title="4.JavaScript"></a>4.JavaScript</h5><p>在 Pug 中写<code>JS</code>代码需要在行首加一个<code>-</code>，但是在条件判断时由于括号是可选的，所以可以省略行首的<code>-</code>，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- var user = &#123; description: &apos;foo bar baz&apos; &#125;</span><br><span class="line">- var authorised = false</span><br><span class="line">#user</span><br><span class="line">  if user.description</span><br><span class="line">    h2.green 描述</span><br><span class="line">    p.description= user.description</span><br><span class="line">  else if authorised</span><br><span class="line">    h2.blue 描述</span><br><span class="line">    p.description.</span><br><span class="line">      用户没有添加描述。</span><br><span class="line">      不写点什么吗……</span><br><span class="line">  else</span><br><span class="line">    h2.red 描述</span><br><span class="line">    p.description 用户没有描述</span><br></pre></td></tr></table></figure></p>
+<h5 id="5-Mixin"><a href="#5-Mixin" class="headerlink" title="5.Mixin"></a>5.Mixin</h5><p><code>Mixin</code>，顾名思义，就是重复代码块，使用也很简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//- 定义</span><br><span class="line">mixin pet(name)</span><br><span class="line">    li.pet = name</span><br><span class="line">//- 使用</span><br><span class="line">+pet(&apos;cat&apos;)</span><br><span class="line">+pet(&apos;dog&apos;)</span><br></pre></td></tr></table></figure></p>
+<h4 id="（四）Include-和-Inheritance"><a href="#（四）Include-和-Inheritance" class="headerlink" title="（四）Include 和 Inheritance"></a>（四）Include 和 Inheritance</h4><h5 id="Include"><a href="#Include" class="headerlink" title="Include"></a>Include</h5><p>包含（include）功能允许我们把另外的文件内容插入进来</p>
+<p>比如我们现在有一个<code>.pug</code>文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//- includes/head.pug</span><br><span class="line">head</span><br><span class="line">  title 我的网站</span><br><span class="line">  script(src=&apos;/javascripts/app.js&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>那么我们就可以在另一个文件里引用它，是不是基本实现了我们组件化的需求呢<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//- index.pug</span><br><span class="line">doctype html</span><br><span class="line">html</span><br><span class="line">  include includes/head.pug</span><br><span class="line">  body</span><br><span class="line">    h1 欢迎我的网站</span><br></pre></td></tr></table></figure></p>
+<h5 id="Inheritance"><a href="#Inheritance" class="headerlink" title="Inheritance"></a>Inheritance</h5><p>Pug 支持使用 block 和 extends 关键字进行模板的继承。一个称之为“块”（block）的代码块，可以被子模板覆盖、替换</p>
+<p>比如我们创建了一个默认布局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//- layout.pug</span><br><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    title 我的站点 - #&#123;title&#125;</span><br><span class="line">    block scripts</span><br><span class="line">      script(src=&apos;/jquery.js&apos;)</span><br><span class="line">  body</span><br><span class="line">    block content</span><br><span class="line">    block foot</span><br><span class="line">      #footer</span><br><span class="line">        p 一些页脚的内容</span><br></pre></td></tr></table></figure></p>
+<p>现在我们可以引用这个布局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">extends layout.pug</span><br><span class="line"></span><br><span class="line">block scripts</span><br><span class="line">  script(src=&apos;/jquery.js&apos;)</span><br><span class="line">  script(src=&apos;/pets.js&apos;)</span><br><span class="line"></span><br><span class="line">block content</span><br><span class="line">  h1= title</span><br><span class="line">  - var pets = [&apos;cat&apos;, &apos;dog&apos;]</span><br><span class="line">  each petName in pets</span><br><span class="line">    include pet.pug</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/24/async&await/" rel="next" title="理解 同步/ 异步 与 阻塞/非阻塞">
+                <i class="fa fa-chevron-left"></i> 理解 同步/ 异步 与 阻塞/非阻塞
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">王亚东</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#（一）为什么要用-Pug"><span class="nav-number">1.</span> <span class="nav-text">（一）为什么要用 Pug</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（二）Webpack-配置"><span class="nav-number">2.</span> <span class="nav-text">（二）Webpack 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（三）基础语法知识"><span class="nav-number">3.</span> <span class="nav-text">（三）基础语法知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-类名和ID名"><span class="nav-number">3.1.</span> <span class="nav-text">1.类名和ID名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-属性"><span class="nav-number">3.2.</span> <span class="nav-text">2.属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-文本内容"><span class="nav-number">3.3.</span> <span class="nav-text">3.文本内容</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-JavaScript"><span class="nav-number">3.4.</span> <span class="nav-text">4.JavaScript</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-Mixin"><span class="nav-number">3.5.</span> <span class="nav-text">5.Mixin</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（四）Include-和-Inheritance"><span class="nav-number">4.</span> <span class="nav-text">（四）Include 和 Inheritance</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Include"><span class="nav-number">4.1.</span> <span class="nav-text">Include</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Inheritance"><span class="nav-number">4.2.</span> <span class="nav-text">Inheritance</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王亚东</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
