@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JavaScript,Node.js," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="在学习 JavaScript 过程中，经常遇到 同步/异步 ，阻塞/非阻塞 ，的说法，以前对其只有基本概念上的认识，对其机制存在困惑，比如到底什么是阻塞和非阻塞？什么是同步和异步？同步就一定是阻塞吗？异步就一定是非阻塞吗？最近在学习 Node.js 过程中对这些概念有了更深的理解。 我们先来看一个例子，再去理解分辨这些概念。 （一）爱喝茶的老张老张没别的爱好，就是爱喝茶，喝茶首先要烧开水。出场人物">
-<meta name="keywords" content="JavaScript,Node.js">
+<meta name="description" content="Webpack是现在主流的功能强大的模块化打包工具，在使用Webpack时，如果不注意性能优化，有非常大的可能会产生性能问题，比如开发时打包构建速度慢、开发调试时的重复性工作等。本文将会讲解一些基本的Webpack性能优化问题。 一、优化构建速度 设置 resolve.modules:[path.resolve(__dirname, &amp;#39;node_modules&amp;#39;)]避免层层查找。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="理解 同步&#x2F; 异步 与 阻塞&#x2F;非阻塞">
-<meta property="og:url" content="http://yoursite.com/2018/07/24/async&await/index.html">
+<meta property="og:title" content="初探 Webpack 性能优化">
+<meta property="og:url" content="http://yoursite.com/2018/12/20/webpack-per/index.html">
 <meta property="og:site_name" content="听雨小竹">
-<meta property="og:description" content="在学习 JavaScript 过程中，经常遇到 同步/异步 ，阻塞/非阻塞 ，的说法，以前对其只有基本概念上的认识，对其机制存在困惑，比如到底什么是阻塞和非阻塞？什么是同步和异步？同步就一定是阻塞吗？异步就一定是非阻塞吗？最近在学习 Node.js 过程中对这些概念有了更深的理解。 我们先来看一个例子，再去理解分辨这些概念。 （一）爱喝茶的老张老张没别的爱好，就是爱喝茶，喝茶首先要烧开水。出场人物">
+<meta property="og:description" content="Webpack是现在主流的功能强大的模块化打包工具，在使用Webpack时，如果不注意性能优化，有非常大的可能会产生性能问题，比如开发时打包构建速度慢、开发调试时的重复性工作等。本文将会讲解一些基本的Webpack性能优化问题。 一、优化构建速度 设置 resolve.modules:[path.resolve(__dirname, &amp;#39;node_modules&amp;#39;)]避免层层查找。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-24T08:10:42.631Z">
+<meta property="og:updated_time" content="2018-12-20T10:00:06.066Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="理解 同步&#x2F; 异步 与 阻塞&#x2F;非阻塞">
-<meta name="twitter:description" content="在学习 JavaScript 过程中，经常遇到 同步/异步 ，阻塞/非阻塞 ，的说法，以前对其只有基本概念上的认识，对其机制存在困惑，比如到底什么是阻塞和非阻塞？什么是同步和异步？同步就一定是阻塞吗？异步就一定是非阻塞吗？最近在学习 Node.js 过程中对这些概念有了更深的理解。 我们先来看一个例子，再去理解分辨这些概念。 （一）爱喝茶的老张老张没别的爱好，就是爱喝茶，喝茶首先要烧开水。出场人物">
+<meta name="twitter:title" content="初探 Webpack 性能优化">
+<meta name="twitter:description" content="Webpack是现在主流的功能强大的模块化打包工具，在使用Webpack时，如果不注意性能优化，有非常大的可能会产生性能问题，比如开发时打包构建速度慢、开发调试时的重复性工作等。本文将会讲解一些基本的Webpack性能优化问题。 一、优化构建速度 设置 resolve.modules:[path.resolve(__dirname, &amp;#39;node_modules&amp;#39;)]避免层层查找。">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/24/async&await/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/12/20/webpack-per/"/>
 
 
 
 
 
-  <title>理解 同步/ 异步 与 阻塞/非阻塞 | 听雨小竹</title>
+  <title>初探 Webpack 性能优化 | 听雨小竹</title>
   
 
 
@@ -243,7 +242,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/24/async&await/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/20/webpack-per/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -260,7 +259,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">理解 同步/ 异步 与 阻塞/非阻塞</h1>
+          <h1 class="post-title" itemprop="name headline">初探 Webpack 性能优化</h1>
         
 
         <div class="post-meta">
@@ -272,8 +271,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-24T16:10:10+08:00">
-                2018-07-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-20T18:00:17+08:00">
+                2018-12-20
               </time>
             
 
@@ -310,37 +309,50 @@
       
 
       
-        <p>在学习 <code>JavaScript</code> 过程中，经常遇到 同步/异步 ，阻塞/非阻塞 ，的说法，以前对其只有基本概念上的认识，对其机制存在困惑，比如到底什么是阻塞和非阻塞？什么是同步和异步？同步就一定是阻塞吗？异步就一定是非阻塞吗？<br>最近在学习 <code>Node.js</code> 过程中对这些概念有了更深的理解。</p>
-<p>我们先来看一个例子，再去理解分辨这些概念。</p>
-<h4 id="（一）爱喝茶的老张"><a href="#（一）爱喝茶的老张" class="headerlink" title="（一）爱喝茶的老张"></a>（一）爱喝茶的老张</h4><p>老张没别的爱好，就是爱喝茶，喝茶首先要烧开水。<br>出场人物：老张<br>出场道具：普通水壶（简称水壶）；烧开水会鸣笛的水壶（简称响水壶）</p>
+        <p>Webpack是现在主流的功能强大的模块化打包工具，在使用Webpack时，如果不注意性能优化，有非常大的可能会产生性能问题，比如开发时打包构建速度慢、开发调试时的重复性工作等。本文将会讲解一些基本的Webpack性能优化问题。</p>
+<h4 id="一、优化构建速度"><a href="#一、优化构建速度" class="headerlink" title="一、优化构建速度"></a>一、优化构建速度</h4><ol>
+<li><p><strong>设置 <code>resolve.modules:[path.resolve(__dirname, &#39;node_modules&#39;)]</code>避免层层查找。</strong></p>
+<p> <code>resolve.modules</code>告诉 <code>webpack</code> 去哪些目录下寻找第三方模块，默认值为<code>[&#39;node_modules&#39;]</code>，会依次查找<code>./node_modules</code> 、<code>../node_modules</code>、 <code>../../node_modules</code>。</p>
+</li>
+<li><p><strong>合理配置<code>resolve.extensions</code>，减少文件查找。</strong></p>
+<p> 默认值：<code>extensions:[&#39;.js&#39;, &#39;.json&#39;]</code> , 当导入语句没带文件后缀时，Webpack会根据extensions定义的后缀列表进行文件查找，所以：</p>
 <a id="more"></a>
-<ol>
-<li>老张把<strong>水壶</strong>放到火上，然后就站在旁边等着水开。这是 <strong>同步阻塞</strong> 。</li>
-<li>老张把<strong>水壶</strong>放到火上，然后去客厅看电视，时不时来看一眼水有没有开。这是 <strong>同步非阻塞</strong> 。</li>
-<li>老张把<strong>响水壶</strong>放到火上，然后站在旁边等着水开。这是 <strong>异步阻塞</strong> 。</li>
-<li>老张把<strong>响水壶</strong>放到火上，然后觉得既然水开了会响，那还站在这有点太傻了，于是去客厅看电视了。这是 <strong>异步非阻塞</strong> 。</li>
+<ul>
+<li>列表值尽量少</li>
+<li>频率高的文件类型的后缀写在前面</li>
+<li>源码中的导入语句尽可能的写上文件后缀，如<code>import store from &#39;./index&#39;</code>要写成<code>import store from &#39;./index.js&#39;</code></li>
+</ul>
+</li>
 </ol>
-<h4 id="（二）阻塞和非阻塞"><a href="#（二）阻塞和非阻塞" class="headerlink" title="（二）阻塞和非阻塞"></a>（二）阻塞和非阻塞</h4><p>阻塞和非阻塞描述的是一种 <strong>状态</strong>，在上面的例子中，阻塞还是非阻塞的判断条件就是烧水时老张的状态，可以去做其他事情(看电视)就是非阻塞，在水壶旁边干等着无法去做其他事情就是阻塞。</p>
-<p>用书面化一点的语言来说，就是</p>
-<blockquote>
-<p><strong>阻塞和非阻塞关注的是在等待调用结果时的状态</strong></p>
-<ol>
-<li>阻塞是指在调用结果返回之前，当前线程会被挂起，调用线程只有在得到结果之后才返回</li>
-<li>非阻塞是指在调用不能立刻返回结果时，该调用不会阻塞当前线程</li>
+<h4 id="二、压缩文件体积"><a href="#二、压缩文件体积" class="headerlink" title="二、压缩文件体积"></a>二、压缩文件体积</h4><ol>
+<li><p><strong>区分环境–减小生产环境代码体积</strong></p>
+<p> 在webpack4 增加了mode模式配置 在浏览器环境下指定了 process.env.NODE_ENV 的值，默认是development，但node环境中还是需要cross-env来设置。<br>mode 是 webpack 4 中新增加的参数选项，其有两个可选值：production 和 development。mode 不可缺省，需要二选一。</p>
+<p> 在项目目录中添加<code>webpack</code>配置文件</p>
+<ul>
+<li>webpack.base.config.js 保存webpack基础通用的配置的文件</li>
+<li>webpack.dev.config.js  保存webpack开发环境配置的文件</li>
+<li>webpack.prod.config.js 保存webpack生成环境配置的文件</li>
+<li>webpack.config.js webpack执行配置文件, 保存相应环境的配置和webpack基础配置文件合并后的配置</li>
+</ul>
+</li>
+<li><p><strong>压缩JS</strong></p>
+<p> Webpack内置UglifyJS插件、ParallelUglifyPlugin</p>
+<p> 会分析JS代码语法树，理解代码的含义，从而做到去掉无效代码、去掉日志输入代码、缩短变量名等优化。常用配置参数如下：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> UglifyJSPlugin = <span class="built_in">require</span>(<span class="string">'webpack/lib/optimize/UglifyJsPlugin'</span>);</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">plugins: [</span><br><span class="line">    <span class="keyword">new</span> UglifyJSPlugin(&#123;</span><br><span class="line">        compress: &#123;</span><br><span class="line">            warnings: <span class="literal">false</span>,  <span class="comment">//删除无用代码时不输出警告</span></span><br><span class="line">            drop_console: <span class="literal">true</span>,  <span class="comment">//删除所有console语句，可以兼容IE</span></span><br><span class="line">            collapse_vars: <span class="literal">true</span>,  <span class="comment">//内嵌已定义但只使用一次的变量</span></span><br><span class="line">            reduce_vars: <span class="literal">true</span>,  <span class="comment">//提取使用多次但没定义的静态值到变量</span></span><br><span class="line">        &#125;,</span><br><span class="line">        output: &#123;</span><br><span class="line">            beautify: <span class="literal">false</span>, <span class="comment">//最紧凑的输出，不保留空格和制表符</span></span><br><span class="line">            comments: <span class="literal">false</span>, <span class="comment">//删除所有注释</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用Tree Shaking剔除 JS 中的<code>dead-code</code></strong></p>
+<p> tree shaking 是一个术语，通常用于描述移除 JavaScript 上下文中的未引用代码(dead-code)。</p>
+<p> 它正常工作的前提是代码必须采用ES6的模块化语法，因为ES6模块化语法是静态的（在导入、导出语句中的路径必须是静态字符串，且不能放入其他代码块中）。</p>
+</li>
+<li><p><strong>使用webpack-bundle-analyzer</strong></p>
+<p> 可以使用 <code>webpack-bundle-analyzer</code> 来分析 Webpack 生成的包体组成并且以 <strong>可视化</strong> 的方式反馈给开发者。</p>
+<p> 使用npm安装该插件:</p>
+<p> <code>npm install --save-dev webpack-bundle-analyzer</code></p>
+<p> 然后我们需要修改webpack.config.js来引入该插件：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const BundleAnalyzerPlugin = require(&apos;webpack-bundle-analyzer&apos;).BundleAnalyzerPlugin;</span><br><span class="line">// ...</span><br><span class="line">plugins: [new BundleAnalyzerPlugin()]</span><br><span class="line">// ...</span><br></pre></td></tr></table></figure>
+<p> 执行<code>webpack-dev-server</code>，浏览器将会自动在<code>localhost:8888</code>打开分析页面。</p>
+</li>
 </ol>
-</blockquote>
-<h4 id="（三）同步和异步"><a href="#（三）同步和异步" class="headerlink" title="（三）同步和异步"></a>（三）同步和异步</h4><p>同步和异步描述的是一种 <strong>消息通知方式</strong> ，在上面的例子中，同步和异步的判断条件就是老张得知水开了的方式，老张主动(站在水壶边/多次去查看)得到消息是就是同步，老张被动(水开了响水壶鸣笛提醒)得到消息就是异步。</p>
-<p>用书面化一点的语言来说，就是</p>
-<blockquote>
-<p><strong>同步和异步关注的是消息通知机制</strong></p>
-<ol>
-<li>同步就是在发出一个调用时，没得到结果之前，该调用就不返回。但是一旦调用返回就得到返回值了，调用者主动等待这个调用的结果</li>
-<li>异步就是在发出一个调用时，这个调用就直接返回了，不管返回有没有结果。当一个异步过程调用发出后，被调用者通过状态，通知来通知调用者，或者通过回调函数处理这个调用</li>
-</ol>
-</blockquote>
-<h4 id="（四）总结"><a href="#（四）总结" class="headerlink" title="（四）总结"></a>（四）总结</h4><p>所谓同步异步，只是对于水壶而言。普通水壶，同步；响水壶，异步。对应的就是消息通知机制。<br>虽然都能干活，但是响水壶可以在总结完工之后提醒老张水开了。同步只能让调用者去轮询自己(情况2中)，造成老张效率低下。</p>
-<p>所谓阻塞非阻塞，只是相对于老张而言，立等的老张，阻塞；看电视的老张，非阻塞。对应的就是程序等待结果时的状态。<br>情况1和情况3中老航就是阻塞的，我们也可以看到虽然情况3中水壶是异步的，但是并没有什么意义，因为老张还是浪费时间在旁边等着。所以一般异步是配合非阻塞使用的，这样才能发挥出异步的作用。</p>
-<p>经过这样一番理解，我相信文章开头提出的几个问题也都豁然开朗了。</p>
 
       
     </div>
@@ -356,14 +368,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
-          
-            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
-          
-        </div>
-      
 
       
       
@@ -373,8 +377,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/27/Promise/" rel="next" title="简单理解 Promise">
-                <i class="fa fa-chevron-left"></i> 简单理解 Promise
+              <a href="/2018/11/30/deploy/" rel="next" title="前端部署服务器小节">
+                <i class="fa fa-chevron-left"></i> 前端部署服务器小节
               </a>
             
           </div>
@@ -382,10 +386,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/07/pug/" rel="prev" title="Pug 初步使用及问题">
-                Pug 初步使用及问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -508,7 +508,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#（一）爱喝茶的老张"><span class="nav-number">1.</span> <span class="nav-text">（一）爱喝茶的老张</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（二）阻塞和非阻塞"><span class="nav-number">2.</span> <span class="nav-text">（二）阻塞和非阻塞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（三）同步和异步"><span class="nav-number">3.</span> <span class="nav-text">（三）同步和异步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（四）总结"><span class="nav-number">4.</span> <span class="nav-text">（四）总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、优化构建速度"><span class="nav-number">1.</span> <span class="nav-text">一、优化构建速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、压缩文件体积"><span class="nav-number">2.</span> <span class="nav-text">二、压缩文件体积</span></a></li></ol></div>
             
 
           </div>
