@@ -313,9 +313,6 @@
 <h4 id="一、优化构建速度"><a href="#一、优化构建速度" class="headerlink" title="一、优化构建速度"></a>一、优化构建速度</h4><ol>
 <li><p><strong>设置 <code>resolve.modules:[path.resolve(__dirname, &#39;node_modules&#39;)]</code>避免层层查找。</strong></p>
 <p> <code>resolve.modules</code>告诉 <code>webpack</code> 去哪些目录下寻找第三方模块，默认值为<code>[&#39;node_modules&#39;]</code>，会依次查找<code>./node_modules</code> 、<code>../node_modules</code>、 <code>../../node_modules</code>。</p>
-</li>
-<li><p><strong>合理配置<code>resolve.extensions</code>，减少文件查找。</strong></p>
-<p> 默认值：<code>extensions:[&#39;.js&#39;, &#39;.json&#39;]</code> , 当导入语句没带文件后缀时，Webpack会根据extensions定义的后缀列表进行文件查找，所以：</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/12/20/webpack-per/#more" rel="contents">
@@ -439,8 +436,7 @@
 
       
         
-          
-            <p>最近在将一些前端项目部署到服务器，现在总结一下关键步骤和踩过的一些坑</p>
+          <p>最近在将一些前端项目部署到服务器，现在总结一下关键步骤和踩过的一些坑</p>
 <h3 id="一、连接到Linux服务器"><a href="#一、连接到Linux服务器" class="headerlink" title="一、连接到Linux服务器"></a>一、连接到Linux服务器</h3><p>既然是部署到Linux服务器，当然要先有一个服务器啦，没有服务器的话可以先买一个“阿里云”或者“腾讯云”的服务器</p>
 <h4 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h4><pre><code>`ssh -p port root@xx.xx.xxx.xx`  =&gt; 输入密码
 
@@ -449,94 +445,14 @@ port:  端口
 root: 用户名
 
 xx.xx.xxx.xx: IP
-</code></pre><h3 id="二、在服务器上安装相关依赖（若已安装可跳过）"><a href="#二、在服务器上安装相关依赖（若已安装可跳过）" class="headerlink" title="二、在服务器上安装相关依赖（若已安装可跳过）"></a>二、在服务器上安装相关依赖（若已安装可跳过）</h3><p>1 .  <strong>安装node</strong></p>
-<p>部署前端项目当然要安装Node啦， 官方提供的安装方法：</p>
-<pre><code>`curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -`
-
-`sudo yum -y install nodejs`
-</code></pre><p>执行 node -v  检查node是否安装成功</p>
-<ol start="2">
-<li><p><strong>安装淘宝镜像</strong></p>
-<p> <code>sudo npm i -g cnpm</code></p>
-</li>
-<li><p><strong>安装nrm</strong></p>
-<p> <code>sudo cnpm install -g nrm</code></p>
-<p> nrm 是一个 NPM 源管理器，允许我们快速地切换源。</p>
-</li>
-<li><p><strong>安装PM2</strong></p>
-<p> <code>sudo npm i -g pm2</code></p>
-<p> PM2是node进程管理工具，可以利用它来简化很多node应用管理的繁琐任务，如性能监控、自动重启、负载均衡等，而且使用非常简单。</p>
-<p> 常用PM2命令:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">启动：</span><br><span class="line">pm2 start app.js</span><br><span class="line"></span><br><span class="line">停止：</span><br><span class="line">pm2 stop app.js</span><br><span class="line"></span><br><span class="line">删除：</span><br><span class="line">pm2 delete app.js</span><br><span class="line"></span><br><span class="line">查看进程状态：</span><br><span class="line">pm2 ls</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="三、建立文件夹并上传文件"><a href="#三、建立文件夹并上传文件" class="headerlink" title="三、建立文件夹并上传文件"></a>三、建立文件夹并上传文件</h3><h4 id="Example-1"><a href="#Example-1" class="headerlink" title="Example:"></a>Example:</h4><ol>
-<li><p>进入服务器后进入目标文件夹</p>
-<p> <code>cd ../usr/local/your/project/path</code></p>
-</li>
-<li><p>建立 public 文件夹</p>
-<p> <code>mkdir public</code></p>
-</li>
-<li><p>在本地 <strong>/public</strong> 目录下执行 <code>npm run build</code>，然后压缩 <strong>dest</strong> 文件夹得到 <strong>dest.zip</strong> , 压缩 <strong>server</strong> 得到 <strong>server.zip</strong></p>
-</li>
-<li><p>FileZilla是一个免费开源的FTP客户端软件，可以用它很方便地将文件上传至服务器</p>
-<p>用 <strong>FileZilla</strong> 将 <strong>dest.zip</strong> 上传到 <strong>/public</strong> 下面,</p>
-<p>用 <strong>FileZilla</strong> 将 <strong>server.zip</strong> 文件夹上传到 <code>/your/project/path</code></p>
-</li>
-<li><p>执行</p>
-<p><code>sudo unzip dest.zip</code></p>
-<p><code>sudo unzip server.zip</code></p>
-<p>进行解压，解压后目录结构如下:</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/your/project/path/</span><br><span class="line">|</span><br><span class="line">—— public</span><br><span class="line">|	     |</span><br><span class="line">|	      —— dest</span><br><span class="line">|	     |</span><br><span class="line">|	      —— dest.zip</span><br><span class="line">|</span><br><span class="line">|</span><br><span class="line">—— server</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>server目录下面 <code>npm start</code>(本地查看) / <code>npm run serve</code></p>
-</li>
-<li><p>测试项目是否可以运行，访问：</p>
-<p> <code>http://服务器的IP:端口号/app.html#/</code></p>
-<p> <code>http://47.100.10.84:7382/app.html</code></p>
-</li>
-</ol>
-<h3 id="四、注意事项："><a href="#四、注意事项：" class="headerlink" title="四、注意事项："></a>四、注意事项：</h3><ul>
-<li><p><strong>如果使用非root（如workflowadmin）用户登录遇到没有在该用户下读写文件的权限的问题</strong></p>
-<ol>
-<li><p>可以先将 /server 和 /public 上传到 workflowadmin 用户下</p>
-</li>
-<li><p>再通过命令</p>
-<p><code>mv /home/workflowadmin/public/ /usr/local/workflow/workflow-static/</code></p>
-<p><code>mv /home/workflowadmin/server/ /usr/local/workflow/workflow-static/</code></p>
-<p>将 /public 和 /server 移动到 root 用户下</p>
-<p><code>sudo -i</code>   (切换到root用户)</p>
-<p><code>su -l workflowadmin</code>  (切换到workflowadmin用户)</p>
-</li>
-</ol>
-</li>
-<li><p><strong>使用ts-node启动在一个服务器上启动多个项目</strong></p>
-<ol>
-<li><p>可以选择不使用ts-node，在/server下执行  <code>tsc</code>（需先全局安装typescript） ，编译成 /dist</p>
-</li>
-<li><p>修改 <strong>/server/package.json</strong> ，如果修改 App name 可以在后面加上<br><code>--name project-name</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&quot;serve&quot;: &quot;pm2 start ts-node -- ./src/index.ts&quot;,</span><br><span class="line">&quot;stop&quot;: &quot;pm2 stop ts-node -- ./src/index.ts&quot;,</span><br><span class="line"></span><br><span class="line">为</span><br><span class="line"></span><br><span class="line">&quot;serve&quot;: &quot;pm2 start ./dist/index.js --name project-name&quot;,</span><br><span class="line">&quot;stop&quot;: &quot;pm2 stop  ./dist/index.js --name project-name&quot;,</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p><strong><code>Cannot find module pm2/lib/ProcessContainerFork.js</code></strong></p>
-<p>  全局安装的 pm2 和 ts-node 一起使用时可能会出现上述报错，解决办法就是：</p>
-<ol>
-<li><code>rm -rf ~/.pm2</code></li>
-<li><p>需要使用pm2的时候用项目内的</p>
-<p> <code>node_modules/pm2/bin/pm2</code></p>
-</li>
-</ol>
-</li>
-<li><p><strong>端口被占用</strong></p>
-<ol>
-<li><code>lsof -i:端口号</code> 查询被占用端口的 PID 值</li>
-<li><code>kill PID</code>  杀掉占用该端口的进程</li>
-</ol>
-</li>
-</ul>
-
-          
+</code></pre><h3 id="二、在服务器上安装相关依赖（若已安装可跳过）"><a href="#二、在服务器上安装相关依赖（若已安装可跳过）" class="headerlink" title="二、在服务器上安装相关依赖（若已安装可跳过）"></a>二、在服务器上安装相关依赖（若已安装可跳过）</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/30/deploy/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1135,7 +1051,7 @@ xx.xx.xxx.xx: IP
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
