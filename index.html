@@ -239,6 +239,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/18/externals/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliennnnnn">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/18/externals/" itemprop="url">详解 Webpack 之 externals 的使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-18T17:32:50+08:00">
+                2019-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在项目开发过程中，不可避免地会引入许多第三方库，导致 Webpack 打包后的 bundle 文件过大，Webpack 提供的外部扩展(<code>externals</code>)可以很好地解决这个问题。</p>
+<p><code>externals</code>会告诉 Webpack 无需打包哪些库文件，然后我们再通过 CDN 引入。</p>
+<p>Webpack 官方对externals的解释比较简单</p>
+<blockquote>
+<p><code>externals</code> 配置选项提供了「从输出的 bundle 中排除依赖」的方法。相反，所创建的 bundle 依赖于那些存在于用户环境(consumer’s environment)中的依赖。</p>
+</blockquote>
+<p>也就是说，如果我们想引用一个库，但是并不想让 Webpack 打包，就可以使用 webpack 提供的 <code>externals</code> ，配置后我们依旧可以提供 CMD、AMD 或者window/global 全局的方式访问。</p>
+<h3 id="externals几种用法"><a href="#externals几种用法" class="headerlink" title="externals几种用法"></a>externals几种用法</h3><h4 id="array"><a href="#array" class="headerlink" title="array"></a>array</h4><p>数组内的每个元素可以是<code>object</code>，<code>reg</code>，<code>string</code>，<code>function</code>中任意一种<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">externals: [</span><br><span class="line">    &#123;</span><br><span class="line">        react: <span class="string">"React"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    /^[a-z\<span class="number">-0</span><span class="number">-9</span>]+$/,</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<h4 id="object"><a href="#object" class="headerlink" title="object"></a>object</h4><p>这种形式应该是最常见的配置形式。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">externals: &#123;</span><br><span class="line">    react: <span class="string">'React'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="reg"><a href="#reg" class="headerlink" title="reg"></a>reg</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">externals: <span class="regexp">/^[a-z\-0-9]+$/</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用方法："><a href="#使用方法：" class="headerlink" title="使用方法："></a>使用方法：</h3><ol>
+<li><p>在入口文件(<code>app.html</code>)中引入所需库的CDN</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script crossorigin src=<span class="string">"https://assets.gaiaworkforce.com/libs/react/16.7.0/umd/react.production.min.js"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>webpack.config.js</code>文件中对<code>externals</code>进行配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    externals: &#123;</span><br><span class="line">        react: <span class="string">'React'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>js</code>中进行引用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="不同环境配置方式："><a href="#不同环境配置方式：" class="headerlink" title="不同环境配置方式："></a>不同环境配置方式：</h3><ol>
+<li><p>上例这种配置方式就是 <strong>浏览器环境</strong> 下，通过<code>&lt;script&gt;</code>引入第三方库，也就是在window上挂载这个全局变量，然后就可以直接使用了。</p>
+</li>
+<li><p>如果你的代码需要运行在<code>Node</code>环境中，那么你需要在<code>externals</code>中添加前缀 <code>commonjs2</code> 或者 <code>commonjs</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">externals:&#123;</span><br><span class="line">  react:<span class="string">'commonjs2 react'</span>,</span><br><span class="line">  lodash:<span class="string">'commonjs2 lodash'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在符合<code>AMD规范</code>的环境中加载，需要添加前缀<code>amd</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">externals:&#123;</span><br><span class="line">  react:<span class="string">'amd React'</span>,</span><br><span class="line">  lodash:<span class="string">'amd lodash'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/09/three-way-handshake/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1289,7 +1438,7 @@ xx.xx.xxx.xx: IP
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
