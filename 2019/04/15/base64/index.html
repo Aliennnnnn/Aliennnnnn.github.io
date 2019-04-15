@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,Webpack," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近在项目中遇到一个很奇怪的问题。在使用SVG图片平铺作为页面背景时，会出现下图的情况，代码如下：12345.edit-canvas-name &amp;#123;    background-image: url(&amp;apos;./layout.svg&amp;apos;);    background-size: 100% 100px;    background-repeat: repeat-y;&amp;#125;">
+<meta name="keywords" content="JavaScript,Webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谁动了你的Base64?">
+<meta property="og:url" content="http://yoursite.com/2019/04/15/base64/index.html">
+<meta property="og:site_name" content="Aliennnnnn">
+<meta property="og:description" content="最近在项目中遇到一个很奇怪的问题。在使用SVG图片平铺作为页面背景时，会出现下图的情况，代码如下：12345.edit-canvas-name &amp;#123;    background-image: url(&amp;apos;./layout.svg&amp;apos;);    background-size: 100% 100px;    background-repeat: repeat-y;&amp;#125;">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://aliennnnnn.github.io/assets/base64-wrong.png">
+<meta property="og:image" content="https://aliennnnnn.github.io/assets/base64-right.png">
+<meta property="og:updated_time" content="2019-04-15T05:44:18.793Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谁动了你的Base64?">
+<meta name="twitter:description" content="最近在项目中遇到一个很奇怪的问题。在使用SVG图片平铺作为页面背景时，会出现下图的情况，代码如下：12345.edit-canvas-name &amp;#123;    background-image: url(&amp;apos;./layout.svg&amp;apos;);    background-size: 100% 100px;    background-repeat: repeat-y;&amp;#125;">
+<meta name="twitter:image" content="https://aliennnnnn.github.io/assets/base64-wrong.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/15/base64/"/>
+
+
+
+
+
+  <title>谁动了你的Base64? | Aliennnnnn</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Aliennnnnn</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-目录">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/15/base64/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliennnnnn">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">谁动了你的Base64?</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-15T13:42:10+08:00">
+                2019-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在项目中遇到一个很奇怪的问题。在使用SVG图片平铺作为页面背景时，会出现下图的情况，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.edit-canvas-name &#123;</span><br><span class="line">    background-image: url(&apos;./layout.svg&apos;);</span><br><span class="line">    background-size: 100% 100px;</span><br><span class="line">    background-repeat: repeat-y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p><img src="https://aliennnnnn.github.io/assets/base64-wrong.png" alt="wrong"></p>
+<p>我们可以明显地看到，在第一列和第二列之间的空间明显大于其他列之间的空间，而且这个问题只出现在线上，本地运行并不会出现这个问题，本地运行时如下：</p>
+<p><img src="https://aliennnnnn.github.io/assets/base64-right.png" alt="right"></p>
+<p>通过比较线上和本地运行时的代码发现，webpack 将 <strong>SVG</strong> 转换为 <strong>base64</strong> 格式，线上和本地的 base64 并不相同。</p>
+<p>本地：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxzdHlsZT5yZWN0e3k6MTBweDt3aWR0aDpjYWxjKCgxMDAlIC0gMTMwcHgpLzEyKTtmaWxsOiNmNWY3ZmF9cmVjdDpudGgtY2hpbGQoMSl7eDpjYWxjKCgoMTAwJSAtIDEzMHB4KS8xMiArIDEwcHgpKjAgKyAxMHB4KX1yZWN0Om50aC1jaGlsZCgyKXt4OmNhbGMoKCgxMDAlIC0gMTMwcHgpLzEyICsgMTBweCkqMSArIDEwcHgpfXJlY3Q6bnRoLWNoaWxkKDMpe3g6Y2FsYygoKDEwMCUgLSAxMzBweCkvMTIgKyAxMHB4KSoyICsgMTBweCl9cmVjdDpudGgtY2hpbGQoNCl7eDpjYWxjKCgoMTAwJSAtIDEzMHB4KS8xMiArIDEwcHgpKjMgKyAxMHB4KX1yZWN0Om50aC1jaGlsZCg1KXt4OmNhbGMoKCgxMDAlIC0gMTMwcHgpLzEyICsgMTBweCkqNCArIDEwcHgpfXJlY3Q6bnRoLWNoaWxkKDYpe3g6Y2FsYygoKDEwMCUgLSAxMzBweCkvMTIgKyAxMHB4KSo1ICsgMTBweCl9cmVjdDpudGgtY2hpbGQoNyl7eDpjYWxjKCgoMTAwJSAtIDEzMHB4KS8xMiArIDEwcHgpKjYgKyAxMHB4KX1yZWN0Om50aC1jaGlsZCg4KXt4OmNhbGMoKCgxMDAlIC0gMTMwcHgpLzEyICsgMTBweCkqNyArIDEwcHgpfXJlY3Q6bnRoLWNoaWxkKDkpe3g6Y2FsYygoKDEwMCUgLSAxMzBweCkvMTIgKyAxMHB4KSo4ICsgMTBweCl9cmVjdDpudGgtY2hpbGQoMTApe3g6Y2FsYygoKDEwMCUgLSAxMzBweCkvMTIgKyAxMHB4KSo5ICsgMTBweCl9cmVjdDpudGgtY2hpbGQoMTEpe3g6Y2FsYygoKDEwMCUgLSAxMzBweCkvMTIgKyAxMHB4KSoxMCArIDEwcHgpfXJlY3Q6bnRoLWNoaWxkKDEyKXt4OmNhbGMoKCgxMDAlIC0gMTMwcHgpLzEyICsgMTBweCkqMTEgKyAxMHB4KX08L3N0eWxlPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==)</span><br></pre></td></tr></table></figure></p>
+<p>线上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPgogICAgPHN0eWxlIHJlbD0ic3R5bGVzaGVldCI+CiAgICAgICAgcmVjdHsKICAgICAgICAgICAgeTogMTBweDsKICAgICAgICAgICAgd2lkdGg6IGNhbGMoKDEwMCUgLSAxMzBweCkgLyAxMik7CiAgICAgICAgICAgIGZpbGw6ICNGNUY3RkE7CiAgICAgICAgfQogICAgICAgIHJlY3Q6bnRoLWNoaWxkKDEpewogICAgICAgICAgICB4OiBjYWxjKCgoMTAwJSAtIDEzMHB4KSAvIDEyICsgMTBweCkgKiAwICsgMTBweCk7CiAgICAgICAgfQogICAgICAgIHJlY3Q6bnRoLWNoaWxkKDIpewogICAgICAgICAgICB4OiBjYWxjKCgoMTAwJSAtIDEzMHB4KSAvIDEyICsgMTBweCkgKiAxICsgMTBweCk7CiAgICAgICAgfQogICAgICAgIHJlY3Q6bnRoLWNoaWxkKDMpewogICAgICAgICAgICB4OiBjYWxjKCgoMTAwJSAtIDEzMHB4KSAvIDEyICsgMTBweCkgKiAyICsgMTBweCk7CiAgICAgICAgfQogICAgICAgIHJlY3Q6bnRoLWNoaWxkKDQpewogICAgICAgICAgICB4OiBjYWxjKCgoMTAwJSAtIDEzMHB4KSAvIDEyICsgMTBweCkgKiAzICsgMTBweCk7CiAgICAgICAgfQogICAgICAgIHJlY3Q6bnRoLWNoaWxkKDUpewogICAgICAgICAgICB4OiBjYWxjKCgoMTAwJSAtIDEzMHB4KSAvIDEyICsgMTBweCkgKiA0ICsgMTBweCk7CiAgICAgICAgfQogICAgICAgIHJlY3Q6bnRoLWNoaWxkKDYpewogICAgICAgICAgICB4OiBjYWxjKCgoMTAwJSAtIDEzMHB4KSAvIDEyICsgMTBweCkgKiA1ICsgMTBweCk7CiAgICAgICAgfQogICAgICAgIHJlY3Q6bnRoLWNoaWxkKDcpewogICAgICAgICAgICB4OiBjYWxjKCgoMTAwJSAtIDEzMHB4KSAvIDEyICsgMTBweCkgKiA2ICsgMTBweCk7CiAgICAgICAgfQogICAgICAgIHJlY3Q6bnRoLWNoaWxkKDgpewogICAgICAgICAgICB4OiBjYWxjKCgoMTAwJSAtIDEzMHB4KSAvIDEyICsgMTBweCkgKiA3ICsgMTBweCk7CiAgICAgICAgfQogICAgICAgIHJlY3Q6bnRoLWNoaWxkKDkpewogICAgICAgICAgICB4OiBjYWxjKCgoMTAwJSAtIDEzMHB4KSAvIDEyICsgMTBweCkgKiA4ICsgMTBweCk7CiAgICAgICAgfQogICAgICAgIHJlY3Q6bnRoLWNoaWxkKDEwKXsKICAgICAgICAgICAgeDogY2FsYygoKDEwMCUgLSAxMzBweCkgLyAxMiArIDEwcHgpICogOSArIDEwcHgpOwogICAgICAgIH0KICAgICAgICByZWN0Om50aC1jaGlsZCgxMSl7CiAgICAgICAgICAgIHg6IGNhbGMoKCgxMDAlIC0gMTMwcHgpIC8gMTIgKyAxMHB4KSAqIDEwICsgMTBweCk7CiAgICAgICAgfQogICAgICAgIHJlY3Q6bnRoLWNoaWxkKDEyKXsKICAgICAgICAgICAgeDogY2FsYygoKDEwMCUgLSAxMzBweCkgLyAxMiArIDEwcHgpICogMTEgKyAxMHB4KTsKICAgICAgICB9CiAgICA8L3N0eWxlPgogICAgPGc+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICAgICAgPHJlY3QgaGVpZ2h0PSIxMDAlIi8+CiAgICA8L2c+Cjwvc3ZnPg==)</span><br></pre></td></tr></table></figure></p>
+<p>项目中 webpack 对 SVG 的处理是使用<code>url-loader</code>，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: /\.(svg?)(\?[a-z0-9]+)?$/,</span><br><span class="line">    loader: &apos;url-loader?limit=8192&apos;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<p><code>url-loader</code>在图片大小不超过限制时，会将图片以base64的形式打包进css文件以减少请求次数，在图片大小超过限制时则会用<code>file-loader</code>加载图片。难道是<code>url-loader</code>转换的原因？我把代码改成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: /\.(svg?)(\?[a-z0-9]+)?$/,</span><br><span class="line">    loader: &apos;file-loader&apos;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>再次打包部署，果然好了，但是同一张  SVG 图片<code>url-loader</code>为什么会生成两种base64呢，所以我在<code>node_modules/surl-loader/dist/index.js</code>里console.log打印一下输出的base64，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// No limit or within the specified limit</span><br><span class="line">    if (!limit || src.length &lt; limit) &#123;</span><br><span class="line">        if (typeof src === &apos;string&apos;) &#123;</span><br><span class="line">            src = Buffer.from(src);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        let base64 = `module.exports = $&#123;JSON.stringify(`data:$&#123;mimetype || &apos;&apos;&#125;;base64,$&#123;src.toString(&apos;base64&apos;)&#125;`)&#125;`;</span><br><span class="line"></span><br><span class="line">        console.log(&apos;return&gt;&gt;&gt;&gt;&apos;, base64);</span><br><span class="line"></span><br><span class="line">        return `module.exports = $&#123;base64&#125;`;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>npm start</code>发现打印出来的base64和本地运行时base64相同，那线上的另一种base64是哪里来的呢，难道是因为<code>npm start</code>时执行的是<code>development</code>模式？所以我又尝试<code>npm run build</code>，打印出来的还是和本地一样的base64。</p>
+<p>这就很让人百思不得其解了，<code>npm run build</code>时转换出来的也是正确的base64，那错误的base64是哪里来的呢。所以我又查看了构建出来的<code>/dest/app.css</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxzdHlsZT5yZWN0e3k6MTBweDt3aWR0aDpjYWxjKCgxMDAlIC0gMTMwcHgpLzEyKTtmaWxsOiNmNWY3ZmF9cmVjdDpudGgtY2hpbGQoMSl7eDpjYWxjKCgoMTAwJSAtIDEzMHB4KS8xMiArIDEwcHgpKjAgKyAxMHB4KX1yZWN0Om50aC1jaGlsZCgyKXt4OmNhbGMoKCgxMDAlIC0gMTMwcHgpLzEyICsgMTBweCkqMSArIDEwcHgpfXJlY3Q6bnRoLWNoaWxkKDMpe3g6Y2FsYygoKDEwMCUgLSAxMzBweCkvMTIgKyAxMHB4KSoyICsgMTBweCl9cmVjdDpudGgtY2hpbGQoNCl7eDpjYWxjKCgoMTAwJSAtIDEzMHB4KS8xMiArIDEwcHgpKjMgKyAxMHB4KX1yZWN0Om50aC1jaGlsZCg1KXt4OmNhbGMoKCgxMDAlIC0gMTMwcHgpLzEyICsgMTBweCkqNCArIDEwcHgpfXJlY3Q6bnRoLWNoaWxkKDYpe3g6Y2FsYygoKDEwMCUgLSAxMzBweCkvMTIgKyAxMHB4KSo1ICsgMTBweCl9cmVjdDpudGgtY2hpbGQoNyl7eDpjYWxjKCgoMTAwJSAtIDEzMHB4KS8xMiArIDEwcHgpKjYgKyAxMHB4KX1yZWN0Om50aC1jaGlsZCg4KXt4OmNhbGMoKCgxMDAlIC0gMTMwcHgpLzEyICsgMTBweCkqNyArIDEwcHgpfXJlY3Q6bnRoLWNoaWxkKDkpe3g6Y2FsYygoKDEwMCUgLSAxMzBweCkvMTIgKyAxMHB4KSo4ICsgMTBweCl9cmVjdDpudGgtY2hpbGQoMTApe3g6Y2FsYygoKDEwMCUgLSAxMzBweCkvMTIgKyAxMHB4KSo5ICsgMTBweCl9cmVjdDpudGgtY2hpbGQoMTEpe3g6Y2FsYygoKDEwMCUgLSAxMzBweCkvMTIgKyAxMHB4KSoxMCArIDEwcHgpfXJlY3Q6bnRoLWNoaWxkKDEyKXt4OmNhbGMoKCgxMDAlIC0gMTMwcHgpLzEyICsgMTBweCkqMTEgKyAxMHB4KX08L3N0eWxlPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjxyZWN0IGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==)&#125;</span><br></pre></td></tr></table></figure></p>
+<p>果然，这里已经变成了错误的base64，而且代码已经被压缩了，等等，压缩……难道是webpack对css压缩改变了base64，而且webpack只会在<code>npm run build</code>的时候进行css压缩，这也就解释了为什么本地正常，线上就有问题了，一切好像都说得通了……</p>
+<p>验证也很简单，我们是使用<code>optimize-css-assets-webpack-plugin</code>进行css压缩，在<code>webpack.config.babel.js</code>里注释掉<code>new OptimizeCSSAssetsPlugin({})</code> 这一行就好啦。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">switch (ENV) &#123;</span><br><span class="line">    case &apos;production&apos;:</span><br><span class="line">        config = merge(config, &#123;</span><br><span class="line">            optimization: &#123;</span><br><span class="line">                minimizer: [</span><br><span class="line">                    new UglifyJsPlugin(&#123;</span><br><span class="line">                        cache: true,</span><br><span class="line">                        parallel: true,</span><br><span class="line">                        sourceMap: false</span><br><span class="line">                    &#125;),</span><br><span class="line">                   // new OptimizeCSSAssetsPlugin(&#123;&#125;)</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            plugins: [new CleanWebpackPlugin([TARGET])]</span><br><span class="line">        &#125;);</span><br><span class="line">        break;</span><br></pre></td></tr></table></figure>
+<p>再次<code>npm run build</code>，<code>dest/app.css</code>里已经是正确的base64了。<br>但是，我们不可能不压缩css，而且css压缩为什么会改变base64呢，我们再继续看，将在浏览器控制台右键在新Tab页中打开base64，显示错误的base64的 SVG 代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt;</span><br><span class="line">    &lt;style rel=&quot;stylesheet&quot;&gt;</span><br><span class="line">        rect&#123;</span><br><span class="line">            y: 10px;</span><br><span class="line">            width: calc((100% - 130px) / 12);</span><br><span class="line">            fill: #F5F7FA;</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(1)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 0 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(2)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 1 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(3)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 2 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(4)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 3 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(5)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 4 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(6)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 5 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(7)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 6 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(8)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 7 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(9)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 8 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(10)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 9 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(11)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 10 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(12)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 11 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">&lt;/svg&gt;</span><br></pre></td></tr></table></figure>
+<p>我们再打开正确的base64的SVG代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt;</span><br><span class="line">    &lt;style rel=&quot;stylesheet&quot;&gt;</span><br><span class="line">        rect&#123;</span><br><span class="line">            y: 10px;</span><br><span class="line">            width: calc((100% - 130px) / 12);</span><br><span class="line">            fill: #F5F7FA;</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(1)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 0 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(2)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 1 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(3)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 2 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(4)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 3 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(5)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 4 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(6)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 5 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(7)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 6 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(8)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 7 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(9)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 8 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(10)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 9 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(11)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 10 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">        rect:nth-child(12)&#123;</span><br><span class="line">            x: calc(((100% - 130px) / 12 + 10px) * 11 + 10px);</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;g&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">        &lt;rect height=&quot;100%&quot;/&gt;</span><br><span class="line">    &lt;/g&gt;</span><br><span class="line">&lt;/svg&gt;</span><br></pre></td></tr></table></figure></p>
+<p>看到区别了吗？没错，错误的代码比正确的缺少了<code>&lt;g&gt;</code>标签。SVG 中，将元素成组的标签是g元素，使用它是将元素进行分组，然后统一进行平移和旋转之类的功能变换。<code>optimize-css-assets-webpack-plugin</code>自动进行代码压缩，将<code>&lt;g&gt;</code>标签也当做多余元素去掉了，所以会导致样式异常。所以解决方法就是将处理svg的<code>url-loader</code>改为<code>file-loader</code>就可以了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/Webpack/" rel="tag"># Webpack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/18/externals/" rel="next" title="详解 Webpack 之 externals 的使用">
+                <i class="fa fa-chevron-left"></i> 详解 Webpack 之 externals 的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

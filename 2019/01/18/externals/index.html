@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Aliennnnnn">
 <meta property="og:description" content="在项目开发过程中，不可避免地会引入许多第三方库，导致 Webpack 打包后的 bundle 文件过大，Webpack 提供的外部扩展(externals)可以很好地解决这个问题。 externals会告诉 Webpack 无需打包哪些库文件，然后我们再通过 CDN 引入。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-21T01:02:07.885Z">
+<meta property="og:updated_time" content="2019-01-21T01:03:02.608Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="详解 Webpack 之 externals 的使用">
 <meta name="twitter:description" content="在项目开发过程中，不可避免地会引入许多第三方库，导致 Webpack 打包后的 bundle 文件过大，Webpack 提供的外部扩展(externals)可以很好地解决这个问题。 externals会告诉 Webpack 无需打包哪些库文件，然后我们再通过 CDN 引入。">
@@ -323,7 +323,7 @@
 <h4 id="reg"><a href="#reg" class="headerlink" title="reg"></a>reg</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">externals: <span class="regexp">/^[a-z\-0-9]+$/</span></span><br></pre></td></tr></table></figure>
 <h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><ol>
 <li><p>在入口文件(<code>app.html</code>)中引入所需库的CDN</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script crossorigin src=<span class="string">"www.example.html"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script crossorigin src=<span class="string">"www.example-cdn.html"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在<code>webpack.config.js</code>文件中对<code>externals</code>进行配置</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    externals: &#123;</span><br><span class="line">        react: <span class="string">'React'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -380,6 +380,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/15/base64/" rel="prev" title="谁动了你的Base64?">
+                谁动了你的Base64? <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -456,7 +460,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
